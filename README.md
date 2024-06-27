@@ -1,8 +1,5 @@
 # ADaaS Library
 
-
-# ADaaS Library
-
 Typescript ADaaS Library (@devrev/ts-adaas) provides:
 
 - type definitions for ADaaS control protocol,
