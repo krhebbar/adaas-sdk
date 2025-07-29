@@ -740,8 +740,12 @@ export class WorkerAdapter<ConnectorState> {
         };
       }
 
-      if (attachment.inline) {
+      // This will set inline flag in ssor_attachment only if it is explicity
+      // set in the attachment object.
+      if (attachment.inline === true) {
         ssorAttachment.inline = true;
+      } else if (attachment.inline === false) {
+        ssorAttachment.inline = false;
       }
 
       await this.getRepo('ssor_attachment')?.push([ssorAttachment]);
