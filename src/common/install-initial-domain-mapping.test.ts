@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { installInitialDomainMapping } from './install-initial-domain-mapping';
-import { axiosClient } from '../http/axios-client';
+import { axiosClient } from '../http/axios-client-internal';
 import { InitialDomainMapping } from '../types';
 import { createEvent } from '../tests/test-helpers';
 import { EventType } from '../types/extraction';
@@ -10,7 +10,16 @@ jest.mock('axios', () => ({
   ...jest.requireActual('axios'),
   isAxiosError: jest.fn(),
 }));
-jest.mock('../http/axios-client');
+jest.mock('../http/axios-client-internal', () => {
+  const originalModule = jest.requireActual('../http/axios-client-internal');
+  return {
+    ...originalModule,
+    axiosClient: {
+      get: jest.fn(),
+      post: jest.fn(),
+    },
+  };
+});
 jest.mock('../logger/logger');
 
 const mockAxiosClient = axiosClient as jest.Mocked<typeof axiosClient>;
